@@ -75,11 +75,11 @@
                         <Label fx:id="phoneLabel" prefHeight="17.0" prefWidth="229.0" style="-fx-text-fill: red;" />
                      </children>
                   </VBox>
-                  <Text fx:id="loginDataErrorMsg" layoutX="763.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text=".">
-                     <font>
-                        <Font size="1.0" />
-                     </font>
-                  </Text>
+                   <Text fx:id="loginDataErrorMsg" layoutX="254.0" layoutY="422.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: red;" text="Konto już instnieje" textAlignment="CENTER" wrappingWidth="291.50390625">
+                       <font>
+                           <Font name="System Bold" size="22.0" />
+                       </font>
+                   </Text>
                </children>
             </AnchorPane>
             </children>

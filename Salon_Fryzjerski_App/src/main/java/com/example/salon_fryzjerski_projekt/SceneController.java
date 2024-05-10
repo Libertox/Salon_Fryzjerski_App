@@ -18,7 +18,7 @@ public class SceneController {
 
     public void initialize(){
         String accountType = data.getAcccountType();
-        if(Objects.equals(accountType, "admin") || Objects.equals(accountType, "pracownik")) {
+        if(Objects.equals(accountType, "admin") || Objects.equals(accountType, "pracownik") || Objects.equals(accountType, "")) {
             helloButton.setVisible(false);
         }
     }

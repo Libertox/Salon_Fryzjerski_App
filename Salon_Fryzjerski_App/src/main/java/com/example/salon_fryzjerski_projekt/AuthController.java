@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class AuthController{
-    String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+    String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]$";
     String nameRegex = "^[A-Z][a-z]+$";
     String phoneRegex = "^\\d{9}$";
     Pattern namePattern = Pattern.compile(nameRegex);
@@ -42,7 +42,6 @@ public class AuthController{
         loginDataErrorMsg.setVisible(false);
         if (!handleErrorsLogin()) {
             try {
-
                 User user = Client.getUserData(RequestType.GetUserData,username,password);
                 if (user.getAccount_type() != "") {
                     data.setName(user.getName());
@@ -193,14 +192,13 @@ public class AuthController{
 
         boolean isError = false;
 
-
         if (username.isEmpty()) {
-            loginLabel.setText("Pole jest wymagane");
+            loginLabel.setText("Nie podano adresu email");
             isError = true;
         }
 
         if (password.isEmpty()) {
-            passwordLabel.setText("Pole jest wymagane");
+            passwordLabel.setText("Nie podano hasła");
             isError = true;
         }
 

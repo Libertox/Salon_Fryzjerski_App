@@ -8,7 +8,6 @@ public class User  {
     private String name;
     private String surname;
     private String account_type;
-
     private String phoneNumber;
 
     public User(int account_id, String name, String surname, String account_type, String phoneNumber){

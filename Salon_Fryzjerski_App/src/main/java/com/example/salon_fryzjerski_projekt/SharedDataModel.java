@@ -3,7 +3,7 @@ package com.example.salon_fryzjerski_projekt;
 public class SharedDataModel {
     private static final SharedDataModel instance = new SharedDataModel();
     private boolean isLogged;
-    private String accountType;
+    private String accountType = "";
     private String cityName;
     private String branchName;
     private String branchStreet;
