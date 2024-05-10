@@ -1,5 +1,7 @@
 package com.example.salon_fryzjerski_projekt;
 public enum RequestType {
+
+    CheckLoginExist,
     UserData,
     ChangeBranchTime,
     AddEmployee,

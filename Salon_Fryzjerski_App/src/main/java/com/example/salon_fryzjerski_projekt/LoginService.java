@@ -6,25 +6,6 @@ import java.util.UUID;
 
 public class LoginService {
 
-    private static String dbUrl = "jdbc:mysql://localhost:3306/projekt1";
-    private static String dbUser = "root";
-    private static String dbPassword = "";
-
-    public static boolean authenticateUser(Connection connection, String enteredUsername, String enteredPassword) {
-        String sql = "SELECT * FROM dane_logowania WHERE login = ? AND haslo = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, enteredUsername);
-            preparedStatement.setString(2, enteredPassword);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            return resultSet.next();
-
-        } catch (SQLException e) {
-            handleSQLException(e);
-            return false;
-        }
-    }
 
     public boolean isUidUnique(Connection connection, String uid) {
         String query = "SELECT COUNT(*) FROM dane_logowania WHERE uid = ?";
@@ -73,35 +54,6 @@ public class LoginService {
             handleSQLException(e);
         }
     }
-
-    public void deleteClientByLogin(Connection connection, String clientLogin) {
-        String deleteClientSQL = "DELETE FROM klient WHERE dane_logowania_uid IN (SELECT uid FROM dane_logowania WHERE login = ?)";
-        String deleteDaneLogowaniaSQL = "DELETE FROM dane_logowania WHERE login = ?";
-
-        try (PreparedStatement deleteClientStatement = connection.prepareStatement(deleteClientSQL);
-             PreparedStatement deleteDaneLogowaniaStatement = connection.prepareStatement(deleteDaneLogowaniaSQL)) {
-
-            // Usuń klienta
-            deleteClientStatement.setString(1, clientLogin);
-            int rowsAffectedClient = deleteClientStatement.executeUpdate();
-            System.out.println("Usunięto klienta. Liczba usuniętych wierszy z tabeli 'klient': " + rowsAffectedClient);
-
-            // Usuń dane logowania
-            deleteDaneLogowaniaStatement.setString(1, clientLogin);
-            int rowsAffectedDaneLogowania = deleteDaneLogowaniaStatement.executeUpdate();
-            System.out.println("Usunięto dane logowania. Liczba usuniętych wierszy z tabeli 'dane_logowania': " + rowsAffectedDaneLogowania);
-
-            if (rowsAffectedClient > 0 || rowsAffectedDaneLogowania > 0) {
-                System.out.println("Klient usunięty wraz z danymi logowania.");
-            } else {
-                System.out.println("Nie znaleziono klienta o podanym loginie.");
-            }
-
-        } catch (SQLException e) {
-            handleSQLException(e);
-        }
-    }
-
 
     public void addNewEmployeeWithLogin(Connection connection, String imie, String nazwisko, String accountType , String pesel, String adres, String phoneNumber, int dochod, int branchId) {
         String uid = UUID.randomUUID().toString();
@@ -153,7 +105,7 @@ public class LoginService {
         }
     }
 
-    private static boolean isLoginExists(Connection connection, String login) {
+    public boolean isLoginExists(Connection connection, String login) {
         String sql = "SELECT COUNT(*) FROM dane_logowania WHERE login = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, login);

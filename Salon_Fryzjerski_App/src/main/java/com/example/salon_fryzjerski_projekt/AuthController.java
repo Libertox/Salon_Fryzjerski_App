@@ -11,10 +11,11 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.event.ActionEvent;
 import java.io.IOException;
+import java.lang.ref.Cleaner;
 import java.util.regex.Pattern;
 
 public class AuthController{
-    String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]$";
+    String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
     String nameRegex = "^[A-Z][a-z]+$";
     String phoneRegex = "^\\d{9}$";
     Pattern namePattern = Pattern.compile(nameRegex);
@@ -77,6 +78,8 @@ public class AuthController{
 
         if (!handleErrorsRegister()) {
             try {
+
+
                 Client.sendRequest(RequestType.UserData, username, password , name, surname, phone );
 
                 data.setName(name);
@@ -181,6 +184,11 @@ public class AuthController{
         if (surname.isEmpty()){
             surnameLabel.setText("Pole jest wymagane");
             isError = true;
+        }
+
+        if(!isError && Client.isLoignExist(RequestType.CheckLoginExist, username)){
+            isError = true;
+            loginDataErrorMsg.setVisible(true);
         }
 
         return isError;

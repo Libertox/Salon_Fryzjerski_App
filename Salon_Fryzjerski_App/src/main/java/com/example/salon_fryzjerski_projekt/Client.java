@@ -47,6 +47,26 @@ public class Client {
         }
     }
 
+    public  static boolean isLoignExist(RequestType requestType, String login){
+        CreateSocket();
+
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
+
+            out.println(requestType.toString());
+            out.println(login);
+
+            String isExist = in.readLine();
+
+            if(isExist.equals("true"))
+                return true;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static List<Branch> getBranches(RequestType requestType){
 
         List<Branch> branchList = new ArrayList<>();

@@ -31,6 +31,11 @@ class ClientHandler implements Runnable {
 
             try (Connection connection = getConnection()) {
                 switch (requestType) {
+                    case CheckLoginExist:
+                        login = in.readLine();
+                        boolean isExist = loginService.isLoginExists(connection,login);
+                        out.println(isExist);
+                        break;
                     case UserData:
                         login = in.readLine();
                         password = in.readLine();
