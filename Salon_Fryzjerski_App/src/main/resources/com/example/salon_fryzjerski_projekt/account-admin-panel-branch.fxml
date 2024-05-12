@@ -72,12 +72,6 @@
                                     <Label fx:id="addressLabel" prefHeight="17.0" prefWidth="200.0" style="-fx-text-fill: red;" />
                                  </children>
                               </VBox>
-                              <VBox prefHeight="50.0" prefWidth="200.0" spacing="5.0">
-                                 <children>
-                                    <JFXTextField fx:id="income" labelFloat="true" prefHeight="25.0" prefWidth="200.0" promptText="Dochód" />
-                                    <Label fx:id="incomeLabel" prefHeight="17.0" prefWidth="200.0" style="-fx-text-fill: red;" />
-                                 </children>
-                              </VBox>
                            </children>
                         </HBox>
                         <Button fx:id="addEmployeeButton" mnemonicParsing="false" onAction="#handleAddEmployeeButton" prefHeight="40.0" prefWidth="140.0" styleClass="default-button" text="Dodaj pracownika" />

@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class AccountAdminPanelBranch {
-    @FXML Label nameLabel, surnameLabel, peselLabel, phoneLabel, addressLabel, incomeLabel, startTimeLabel, endTimeLabel;
-    @FXML TextField name, surname, pesel, phone, address, income, startTime, endTime;
+    @FXML Label nameLabel, surnameLabel, peselLabel, phoneLabel, addressLabel, startTimeLabel, endTimeLabel;
+    @FXML TextField name, surname, pesel, phone, address, startTime, endTime;
     @FXML Button addEmployeeButton, addTimeButton, adminButton1, adminButton2;
     @FXML ComboBox<String> combobox;
     @FXML VBox VBox1;
@@ -55,7 +55,6 @@ public class AccountAdminPanelBranch {
         peselString = pesel.getText().trim();
         phoneString = phone.getText().trim();
         addressString = address.getText().trim();
-        incomeString = income.getText().trim();
 
         if (!handleEmployeeErrors()) {
 
@@ -66,15 +65,12 @@ public class AccountAdminPanelBranch {
             surnameLabel.setText("");
             peselLabel.setText("");
             addressLabel.setText("");
-            incomeLabel.setText("");
 
             phone.setText("");
             name.setText("");
             surname.setText("");
             pesel.setText("");
             address.setText("");
-            income.setText("");
-
         }
     }
 
@@ -118,8 +114,8 @@ public class AccountAdminPanelBranch {
     }
     private boolean areAllObjectsNonNull() {
         return nameLabel != null && surnameLabel != null && peselLabel != null && phoneLabel != null && addressLabel != null &&
-                incomeLabel != null && startTimeLabel != null && endTimeLabel != null && name != null && surname != null &&
-                pesel != null && phone != null && address != null && income != null && startTime != null && endTime != null &&
+                startTimeLabel != null && endTimeLabel != null && name != null && surname != null &&
+                pesel != null && phone != null && address != null &&  startTime != null && endTime != null &&
                 addEmployeeButton != null && addTimeButton != null && combobox != null && VBox1 != null && AnchorPane1 != null;
     }
 
@@ -145,7 +141,6 @@ public class AccountAdminPanelBranch {
         surnameLabel.setText("");
         peselLabel.setText("");
         addressLabel.setText("");
-        incomeLabel.setText("");
         boolean isError = false;
 
         if (!namePattern.matcher(nameString).matches()) {
@@ -165,11 +160,6 @@ public class AccountAdminPanelBranch {
 
         if (!peselPattern.matcher(peselString).matches()) {
             peselLabel.setText("Nieprawidłowa nazwa");
-            isError = true;
-        }
-
-        if (!incomePattern.matcher(incomeString).matches()) {
-            incomeLabel.setText("Nieprawidłowa nazwa");
             isError = true;
         }
 
@@ -205,11 +195,6 @@ public class AccountAdminPanelBranch {
 
         if (addressString.isEmpty()){
             addressLabel.setText("Pole jest wymagane");
-            isError = true;
-        }
-
-        if (incomeString.isEmpty()){
-            incomeLabel.setText("Pole jest wymagane");
             isError = true;
         }
 
