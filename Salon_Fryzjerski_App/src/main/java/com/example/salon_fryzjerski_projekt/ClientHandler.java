@@ -139,6 +139,11 @@ class ClientHandler implements Runnable {
                         reservationId = in.readLine();
                         out.println(reservationService.getBookingDetails(connection,Integer.parseInt(reservationId)));
                         break;
+                    case GetDurationOfServices:
+                        String serviceId = in.readLine();
+                        System.out.println(serviceId);
+                        out.println(hairdressingServiceService.getDurationOfServices(connection,Integer.parseInt(serviceId)));
+                        break;
                 }
             }
         } catch (Exception e) {

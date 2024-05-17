@@ -19,5 +19,6 @@ public enum RequestType {
     GetBookingDetails,
     GetClientReservation,
     GetEmployeeReservation,
+    GetDurationOfServices,
 
 }

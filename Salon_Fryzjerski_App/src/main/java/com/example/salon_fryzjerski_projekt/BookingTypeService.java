@@ -38,6 +38,25 @@ public class BookingTypeService {
         return result.toString();
     }
 
+    public String getDurationOfServices(Connection connection, int serviceId) {
+        String selectBranchesSQL = "SELECT czas_uslugi FROM uslugi WHERE id_uslugi = ?";
+        String productTime = "";
+
+        try (PreparedStatement selectStatement = connection.prepareStatement(selectBranchesSQL)) {
+            selectStatement.setInt(1, serviceId);
+            try (ResultSet resultSet = selectStatement.executeQuery()) {
+                if (resultSet.next()) {  // Move cursor to the first row
+                    productTime = resultSet.getString("czas_uslugi");
+                }
+            }
+        } catch (SQLException e) {
+            handleSQLException(e);
+        }
+
+        System.out.println("ProductTime: " + productTime);
+        return productTime;
+    }
+
     private static void handleSQLException(SQLException e) {
         e.printStackTrace();
         System.out.println("Błąd SQL: " + e.getMessage());

@@ -23,37 +23,38 @@ public class BookingFinalController {
     public void handleSubmit(ActionEvent event){
         try {
 
-            System.out.println("/////////////////////////////////");
-            System.out.println("City Name: " + cityName);
-            System.out.println("Branch Name: " + branchName);
-            System.out.println("Branch Street: " + branchStreet);
-            System.out.println("Type Text Name: " + typeTextName);
-            System.out.println("Type Description Name: " + typeDescName);
-            System.out.println("Type Price Name: " + typePriceName);
-            System.out.println("Type Time Name: " + typeTimeName);
-            System.out.println("Employee Name: " + employeeName);
-            System.out.println("Date Name: " + dateName);
-            System.out.println("Time Name: " + timeName);
-            System.out.println("Name: " + name);
-            System.out.println("Surname: " + surname);
-            System.out.println("Phone: " + phone);
-            System.out.println(userId);
-            System.out.println(employeeId);
-            System.out.println(cityId);
-            System.out.println(branchId);
-            System.out.println(typeId);
+            String endTime = calculateEndTime(timeName, Client.getDurationOfServices(typeId));
+            System.out.println("EndTime: " + endTime);
 
 
             if(userId == null)
-                Client.sendRequest(RequestType.AddReservation,dateName, "12:00",timeName,name,surname,phone,null, employeeId.toString(),typeId.toString(),branchId.toString());
+                Client.sendRequest(RequestType.AddReservation,dateName,timeName,endTime, name,surname,phone,null, employeeId.toString(),typeId.toString(),branchId.toString());
             else
-                Client.sendRequest(RequestType.AddReservation,dateName, "12:00",timeName,name,surname,data.getPhone(),userId.toString(),employeeId.toString(),typeId.toString(),branchId.toString());
+                Client.sendRequest(RequestType.AddReservation,dateName,timeName,endTime, name,surname,data.getPhone(),userId.toString(),employeeId.toString(),typeId.toString(),branchId.toString());
 
             removeDataFromDataModel();
             switchToEnd(event);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public static String calculateEndTime(String startTime, String duration) {
+        String[] startTimeParts = startTime.split(":");
+        int startHours = Integer.parseInt(startTimeParts[0]);
+        int startMinutes = Integer.parseInt(startTimeParts[1]);
+
+        String[] durationParts = duration.split(":");
+        int durationHours = Integer.parseInt(durationParts[0]);
+        int durationMinutes = Integer.parseInt(durationParts[1]);
+
+        int endMinutes = startMinutes + durationMinutes;
+        int endHours = startHours + durationHours + endMinutes / 60;
+        endMinutes = endMinutes % 60;
+        endHours = endHours % 24;
+
+        String endTime = String.format("%02d:%02d", endHours, endMinutes);
+
+        return endTime;
     }
 
     public void initialize() {
