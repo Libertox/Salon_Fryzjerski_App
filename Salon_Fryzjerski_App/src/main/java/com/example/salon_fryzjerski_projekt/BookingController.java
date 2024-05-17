@@ -1,5 +1,8 @@
 package com.example.salon_fryzjerski_projekt;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -17,9 +20,6 @@ import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 
 public class BookingController{
@@ -51,7 +51,42 @@ public class BookingController{
         List<String> timesList = new ArrayList<>();
         timesList = Client.getTimeSlots(RequestType.GetAvailableTimeSlotsForEmployee,employeeId,date);
 
+        if(!date.equals("")) {
+
+            LocalDate today = LocalDate.now();
+            LocalDate selectDate = LocalDate.parse(date);
+
+            if (today.equals(selectDate))
+                timesList = filterElapsedTimeSlots(timesList);
+        }
+
         return timesList;
+    }
+
+    public static List<String> filterElapsedTimeSlots(List<String> timeSlots) {
+        List<String> availableTimeSlots = new ArrayList<>(timeSlots);
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        Date currentTime = new Date();
+
+        Iterator<String> iterator = availableTimeSlots.iterator();
+        while (iterator.hasNext()) {
+            String timeSlot = iterator.next();
+            if(timeSlot.equals("")) continue;
+
+            try {
+                Date slotTime = timeFormat.parse(timeSlot);
+                slotTime.setYear(currentTime.getYear());
+                slotTime.setMonth(currentTime.getMonth());
+                slotTime.setDate(currentTime.getDate());
+
+                if (slotTime.before(currentTime)) {
+                    iterator.remove();
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return availableTimeSlots;
     }
 
     public void submitBookingButton(ActionEvent event) {
