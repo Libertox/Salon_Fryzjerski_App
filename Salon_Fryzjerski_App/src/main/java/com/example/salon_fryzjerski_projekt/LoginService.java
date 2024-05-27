@@ -55,12 +55,12 @@ public class LoginService {
         }
     }
 
-    public void addNewEmployeeWithLogin(Connection connection, String imie, String nazwisko, String accountType , String pesel, String adres, String phoneNumber, int dochod, int branchId) {
+    public void addNewEmployeeWithLogin(Connection connection, String imie, String nazwisko, String accountType , String pesel, String adres, String phoneNumber, int branchId) {
         String uid = UUID.randomUUID().toString();
 
         if (isUidUnique(connection, uid)) {
             String insertDaneLogowaniaQuery = "INSERT INTO dane_logowania (uid, login, haslo, rodzaj_konta) VALUES (?, ?, ?, ?)";
-            String insertPracownikQuery = "INSERT INTO pracownik (imie,nazwisko,pesel,adres,nr_tel,dochod,oddzial_id_oddzialu,dane_logowania_uid,status) VALUES (?,?,?,?,?,?,?,?,?)";
+            String insertPracownikQuery = "INSERT INTO pracownik (imie,nazwisko,pesel,adres,nr_tel,oddzial_id_oddzialu,dane_logowania_uid,status) VALUES (?,?,?,?,?,?,?,?)";
 
             try (PreparedStatement insertDaneLogowaniaStatement = connection.prepareStatement(insertDaneLogowaniaQuery);
                  PreparedStatement insertPracownikStatement = connection.prepareStatement(insertPracownikQuery)) {
@@ -82,10 +82,9 @@ public class LoginService {
                 insertPracownikStatement.setString(3,pesel);
                 insertPracownikStatement.setString(4,adres);
                 insertPracownikStatement.setString(5,phoneNumber);
-                insertPracownikStatement.setInt(6,dochod);
-                insertPracownikStatement.setInt(7,branchId);
-                insertPracownikStatement.setString(8, daneLogowaniaUid);
-                insertPracownikStatement.setString(9,"pracownik");
+                insertPracownikStatement.setInt(6,branchId);
+                insertPracownikStatement.setString(7, daneLogowaniaUid);
+                insertPracownikStatement.setString(8,"pracownik");
                 insertPracownikStatement.executeUpdate();
 
                 connection.commit();

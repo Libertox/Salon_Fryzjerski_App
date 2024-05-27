@@ -29,7 +29,7 @@ public class AccountAdminPanelBranch {
     @FXML AnchorPane AnchorPane1;
 
     private  List<Branch> branchList = new ArrayList<>();
-    String nameString, surnameString, peselString, phoneString, addressString, incomeString;
+    String nameString, surnameString, peselString, phoneString, addressString;
     String startTimeString, endTimeString;
 
     Integer branchId;
@@ -37,12 +37,10 @@ public class AccountAdminPanelBranch {
     String nameRegex = "^[A-Z][a-z]+$";
     String phoneRegex = "^\\d{9}$";
     String peselRegex = "^\\d{11}$";
-    String incomeRegex = "^\\d+$";
     String timeRegex = "^(?:[0-1]\\d|2[0-3]):[0-5]\\d$";
     Pattern namePattern = Pattern.compile(nameRegex);
     Pattern phonePattern = Pattern.compile(phoneRegex);
     Pattern peselPattern = Pattern.compile(peselRegex);
-    Pattern incomePattern = Pattern.compile(incomeRegex);
     Pattern timePattern = Pattern.compile(timeRegex);
 
     private void addBranchData(){
@@ -58,7 +56,7 @@ public class AccountAdminPanelBranch {
 
         if (!handleEmployeeErrors()) {
 
-            Client.sendRequest(RequestType.AddEmployee,nameString,surnameString,"pracownik",peselString,addressString,phoneString,incomeString,branchId.toString());
+            Client.sendRequest(RequestType.AddEmployee,nameString,surnameString,"pracownik",peselString,addressString,phoneString,branchId.toString());
 
             phoneLabel.setText("");
             nameLabel.setText("");

@@ -96,9 +96,8 @@ class ClientHandler implements Runnable {
                         String pesel = in.readLine();
                         String adres = in.readLine();
                         phoneNumber = in.readLine();
-                        String dochod = in.readLine();
                         branchId = in.readLine();
-                        loginService.addNewEmployeeWithLogin(connection,login,password,status,pesel,adres,phoneNumber,Integer.parseInt(dochod),Integer.parseInt(branchId));
+                        loginService.addNewEmployeeWithLogin(connection,login,password,status,pesel,adres,phoneNumber,Integer.parseInt(branchId));
                         break;
                     case AddReservation:
                         try {
