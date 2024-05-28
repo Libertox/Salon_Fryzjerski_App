@@ -79,7 +79,6 @@ public class AuthController{
         if (!handleErrorsRegister()) {
             try {
 
-
                 Client.sendRequest(RequestType.UserData, username, password , name, surname, phone );
 
                 data.setName(name);
@@ -91,7 +90,6 @@ public class AuthController{
                 User client = Client.getUserData(RequestType.GetUserData,username,password);
 
                 data.setUserId(client.getAccount_id());
-                System.out.println(data.getUserId());
 
                 switchToHome(event);
             } catch (IOException e) {

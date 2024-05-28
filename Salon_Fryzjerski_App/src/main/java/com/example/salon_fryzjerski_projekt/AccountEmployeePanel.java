@@ -64,7 +64,6 @@ public class AccountEmployeePanel {
         }
     }
     public void switchSceneToBookingDetails(int buttonIndex, ActionEvent event){
-        System.out.println(textData.get(buttonIndex + index).getId());
         data.setBookingId(textData.get(buttonIndex + index).getId());
         switchToAccountBookingDetails(event);
     }
@@ -100,7 +99,6 @@ public class AccountEmployeePanel {
     public void handleLeftArrowAction(){
         index -= 5;
         currentPage.setText(String.valueOf(index / 5));
-        System.out.println(index);
         getDataToText();
         rightArrow.setDisable(false);
         if (index == 0){
@@ -111,12 +109,9 @@ public class AccountEmployeePanel {
     public void handleRightArrowAction(){
         index += 5;
         currentPage.setText(String.valueOf(index / 5));
-        System.out.println(index);
         getDataToText();
         leftArrow.setDisable(false);
-        System.out.println(index + " " + textData.size());
         if (index + 5 >= textData.size()){
-            System.out.println(index + " " + textData.size());
             rightArrow.setDisable(true);
         }
     }

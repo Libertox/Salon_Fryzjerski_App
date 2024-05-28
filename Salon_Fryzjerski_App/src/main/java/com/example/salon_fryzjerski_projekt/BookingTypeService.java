@@ -53,13 +53,11 @@ public class BookingTypeService {
             handleSQLException(e);
         }
 
-        System.out.println("ProductTime: " + productTime);
         return productTime;
     }
 
     private static void handleSQLException(SQLException e) {
         e.printStackTrace();
-        System.out.println("Błąd SQL: " + e.getMessage());
     }
 
 

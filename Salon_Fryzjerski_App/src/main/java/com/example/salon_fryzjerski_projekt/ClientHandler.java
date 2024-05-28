@@ -120,10 +120,8 @@ class ClientHandler implements Runnable {
                             reservationService.createReservation(connection, sqlDate, godzinaPoczatkowa, godzinaKoncowa, name, surname, phone, clientId, employeeIdInt, serviceIdInt, branchIdInt);
                         } catch (NumberFormatException e) {
                             System.out.println("NumberFormatException: One of the inputs is not a valid integer.");
-                            // Handle the exception, maybe log it or inform the user
                         } catch (IOException e) {
                             System.out.println("IOException occurred: " + e.getMessage());
-                            // Handle the IOException
                         }
                         break;
                     case GetClientReservation:
@@ -140,7 +138,6 @@ class ClientHandler implements Runnable {
                         break;
                     case GetDurationOfServices:
                         String serviceId = in.readLine();
-                        System.out.println(serviceId);
                         out.println(hairdressingServiceService.getDurationOfServices(connection,Integer.parseInt(serviceId)));
                         break;
                     case DeleteReservationTerm:

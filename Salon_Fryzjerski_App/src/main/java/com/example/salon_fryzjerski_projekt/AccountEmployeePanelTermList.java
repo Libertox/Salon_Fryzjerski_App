@@ -91,7 +91,6 @@ public class AccountEmployeePanelTermList {
     public void deleteSelectedTerm(ActionEvent event) {
 
         Client.sendRequest(RequestType.DeleteReservationTerm, data.getUserId().toString(), getDate(), getTime());
-        System.out.println(data.getUserId());
         reloadPage(event);
     }
 

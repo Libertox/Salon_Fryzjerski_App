@@ -33,15 +33,11 @@ public class LoginService {
         try (PreparedStatement deletePracownikStatement = connection.prepareStatement(deletePracownikSQL);
              PreparedStatement deleteDaneLogowaniaStatement = connection.prepareStatement(deleteDaneLogowaniaSQL)) {
 
-            // Usuń dane logowania
             deleteDaneLogowaniaStatement.setString(1, employeeID);
             int rowsAffectedDaneLogowania = deleteDaneLogowaniaStatement.executeUpdate();
-            System.out.println("Usunięto dane logowania. Liczba usuniętych wierszy z tabeli 'dane_logowania': " + rowsAffectedDaneLogowania);
 
-            // Usuń pracownika
             deletePracownikStatement.setString(1, employeeID);
             int rowsAffectedPracownik = deletePracownikStatement.executeUpdate();
-            System.out.println("Usunięto pracownika. Liczba usuniętych wierszy z tabeli 'pracownik': " + rowsAffectedPracownik);
 
 
             if (rowsAffectedPracownik > 0 || rowsAffectedDaneLogowania > 0) {
@@ -99,8 +95,6 @@ public class LoginService {
                     ex.printStackTrace();
                 }
             }
-        } else {
-            System.out.println("UID is not unique. Choose a different UID.");
         }
     }
 
@@ -157,7 +151,6 @@ public class LoginService {
 
     private static void handleSQLException(SQLException e) {
         e.printStackTrace();
-        System.out.println("Błąd SQL: " + e.getMessage());
     }
 
     public void addNewClientWithLogin(Connection connection, String login, String password, String name, String surname, String phoneNumber) {

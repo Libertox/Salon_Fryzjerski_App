@@ -223,7 +223,6 @@ public class Client {
             out.println(date);
             String line;
             while((line = in.readLine()) != null){
-                System.out.println(line);
                 serviceList.add(line);
             }
         } catch (IOException e) {

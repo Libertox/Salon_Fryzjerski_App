@@ -49,7 +49,7 @@ public class ReservationService {
         } catch (SQLException e) {
             handleSQLException(e);
         }
-        System.out.println(result.toString());
+
         return result.toString();
     }
 
@@ -151,7 +151,7 @@ public class ReservationService {
         } catch (SQLException e) {
             handleSQLException(e);
         }
-        System.out.println(result.toString());
+
         return result.toString();
     }
 
@@ -243,7 +243,6 @@ public class ReservationService {
 
     private static void handleSQLException(SQLException e) {
         e.printStackTrace();
-        System.out.println("Błąd SQL: " + e.getMessage());
     }
 
 }

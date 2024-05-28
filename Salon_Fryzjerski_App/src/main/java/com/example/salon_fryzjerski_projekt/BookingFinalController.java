@@ -24,8 +24,6 @@ public class BookingFinalController {
         try {
 
             String endTime = calculateEndTime(timeName, Client.getDurationOfServices(typeId));
-            System.out.println("EndTime: " + endTime);
-
 
             if(userId == null)
                 Client.sendRequest(RequestType.AddReservation,dateName,timeName,endTime, name,surname,phone,null, employeeId.toString(),typeId.toString(),branchId.toString());

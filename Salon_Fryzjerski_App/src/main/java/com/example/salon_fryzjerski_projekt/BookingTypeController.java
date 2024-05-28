@@ -63,7 +63,6 @@ public class BookingTypeController {
 
     public void initialize(){
         if (areAllObjectsNonNull()) {
-            System.out.println(data.getBranchName());
             getDataToTextList();
             setValueToText();
             maxPages = (int) Math.ceil((double) bookingTypes.size() / 3) - 1;

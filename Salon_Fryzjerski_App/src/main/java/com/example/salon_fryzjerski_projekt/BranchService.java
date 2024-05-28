@@ -9,19 +9,13 @@ public class BranchService {
         String updateBranchHoursSQL = "UPDATE oddzial SET godzina_otwarcia = ?, godzina_zamkniecia = ? WHERE id_oddzialu = ?";
 
         try (PreparedStatement updateStatement = connection.prepareStatement(updateBranchHoursSQL)) {
-            // Przekształć ciągi znaków na obiekty Timestamp
+
 
             updateStatement.setString(1, openingTime);
             updateStatement.setString(2, closingTime);
             updateStatement.setInt(3, branchId);
 
-            int rowsAffected = updateStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                System.out.println("Godziny otwarcia i zamknięcia oddziału zaktualizowane.");
-            } else {
-                System.out.println("Nie znaleziono oddziału o podanym ID.");
-            }
+            updateStatement.executeUpdate();
 
         } catch (SQLException e) {
             handleSQLException(e);
@@ -109,7 +103,6 @@ public class BranchService {
 
     private void handleSQLException(SQLException e) {
         e.printStackTrace();
-        System.out.println("Błąd SQL: " + e.getMessage());
     }
 
 }
