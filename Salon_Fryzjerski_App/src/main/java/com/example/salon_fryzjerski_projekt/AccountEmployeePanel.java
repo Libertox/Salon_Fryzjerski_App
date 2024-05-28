@@ -14,21 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AccountBookingHistory {
-    @FXML private HBox textField1, textField2, textField3, textField4, textField5;
+public class AccountEmployeePanel {
+
+    @FXML
+    private HBox textField1, textField2, textField3, textField4, textField5;
     @FXML private Text text1, text2, text3, text4, text5, currentPage, maxPage;
     @FXML private Button button1, button2, button3, button4, button5, rightArrow, leftArrow;
-
+    @FXML private Button reservationButton, termListButton, addTernButton;
     SharedDataModel data = SharedDataModel.getInstance();
     private List<Booking> textData = new ArrayList<>();
     int index = 0;
 
     private void addData(){
-        if(data.getAcccountType().equals("klient"))
-            textData = Client.getBookingInfo(RequestType.GetClientReservation,data.getUserId());
-        else if (data.getAcccountType().equals("pracownik"))
             textData = Client.getBookingInfo(RequestType.GetEmployeeReservation,data.getUserId());
-
     }
 
     public void initialize() {
@@ -38,6 +36,10 @@ public class AccountBookingHistory {
             leftArrow.setDisable(true);
             if (textData.size() <= 5) rightArrow.setDisable(true);
             getDataToText();
+
+            addTernButton.getStyleClass().add("default-button");
+            termListButton.getStyleClass().add("default-button");
+            reservationButton.getStyleClass().add("panel-selected");
         }
     }
 
@@ -45,7 +47,7 @@ public class AccountBookingHistory {
         return textField1 != null && textField2 != null && textField3 != null && textField4 != null && textField5 != null &&
                 text1 != null && text2 != null && text3 != null && text4 != null && text5 != null && currentPage != null && maxPage != null &&
                 button1 != null && button2 != null && button3 != null && button4 != null && button5 != null &&
-                rightArrow != null && leftArrow != null;
+                rightArrow != null && leftArrow != null && reservationButton != null && termListButton != null && addTernButton != null;
     }
 
     private void getDataToText() {
@@ -62,6 +64,7 @@ public class AccountBookingHistory {
         }
     }
     public void switchSceneToBookingDetails(int buttonIndex, ActionEvent event){
+        System.out.println(textData.get(buttonIndex + index).getId());
         data.setBookingId(textData.get(buttonIndex + index).getId());
         switchToAccountBookingDetails(event);
     }
@@ -97,6 +100,7 @@ public class AccountBookingHistory {
     public void handleLeftArrowAction(){
         index -= 5;
         currentPage.setText(String.valueOf(index / 5));
+        System.out.println(index);
         getDataToText();
         rightArrow.setDisable(false);
         if (index == 0){
@@ -107,9 +111,12 @@ public class AccountBookingHistory {
     public void handleRightArrowAction(){
         index += 5;
         currentPage.setText(String.valueOf(index / 5));
+        System.out.println(index);
         getDataToText();
         leftArrow.setDisable(false);
+        System.out.println(index + " " + textData.size());
         if (index + 5 >= textData.size()){
+            System.out.println(index + " " + textData.size());
             rightArrow.setDisable(true);
         }
     }
@@ -127,5 +134,17 @@ public class AccountBookingHistory {
     public void switchToAccountBookingDetails(ActionEvent event) {
         switchScene(event, "account-booking-history-details.fxml");
     }
-}
 
+    public void switchToAccountReservation(ActionEvent event){
+        switchScene(event, "account-employee-panel.fxml");
+    }
+
+    public void switchToAccountTermList(ActionEvent event){
+        switchScene(event, "account-employee-term-list-panel.fxml");
+    }
+
+    public void switchToAccountTermAdding(ActionEvent event){
+        switchScene(event,"account-employee-panel-adding-term.fxml");
+    }
+
+}

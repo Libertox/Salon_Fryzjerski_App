@@ -102,7 +102,6 @@ public class AccountAdminPanelBranch {
                     Branch selectedBranch = getBranchByName(newValue);
                     if (selectedBranch != null) {
                         branchId = selectedBranch.getId();
-                        System.out.println("Selected Branch ID: " + branchId);
                     }
                 }
                 VBox1.setVisible(true);

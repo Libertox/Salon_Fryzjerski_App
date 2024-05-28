@@ -38,7 +38,7 @@ public class BookingFinalController {
             throw new RuntimeException(e);
         }
     }
-    public static String calculateEndTime(String startTime, String duration) {
+    public String calculateEndTime(String startTime, String duration) {
         String[] startTimeParts = startTime.split(":");
         int startHours = Integer.parseInt(startTimeParts[0]);
         int startMinutes = Integer.parseInt(startTimeParts[1]);

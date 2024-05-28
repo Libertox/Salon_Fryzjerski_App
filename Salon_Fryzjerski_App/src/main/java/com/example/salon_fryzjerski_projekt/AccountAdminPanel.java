@@ -41,7 +41,6 @@ public class AccountAdminPanel {
     }
 
     private void getDataToTextList(String cityName){
-        System.out.println(cityName);
         employeeList = Client.getEmployee(RequestType.GetEmployeeByBranch,cityName);
     }
     public void getBookingBranchDetails(int buttonIndex, ActionEvent event) {

@@ -20,5 +20,7 @@ public enum RequestType {
     GetClientReservation,
     GetEmployeeReservation,
     GetDurationOfServices,
+    DeleteReservationTerm,
+    AddReservationTerm,
 
 }

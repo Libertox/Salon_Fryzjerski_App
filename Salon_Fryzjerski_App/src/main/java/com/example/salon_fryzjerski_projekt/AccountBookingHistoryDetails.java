@@ -96,6 +96,13 @@ public class AccountBookingHistoryDetails {
         }
     }
     public void goBack(ActionEvent event) throws IOException {
-        switchScene(event, "account-booking-history.fxml");
+        String accountType = data.getAcccountType();
+        if(Objects.equals(accountType, "klient")) {
+            switchScene(event, "account-booking-history.fxml");
+        }
+        else{
+            switchScene(event, "account-employee-panel.fxml");
+        }
+
     }
 }

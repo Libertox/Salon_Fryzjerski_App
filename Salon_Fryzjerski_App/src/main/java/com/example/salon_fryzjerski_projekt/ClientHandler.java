@@ -143,6 +143,22 @@ class ClientHandler implements Runnable {
                         System.out.println(serviceId);
                         out.println(hairdressingServiceService.getDurationOfServices(connection,Integer.parseInt(serviceId)));
                         break;
+                    case DeleteReservationTerm:
+                        employeeId = in.readLine();
+                        date = in.readLine();
+                        String startTime = in.readLine();
+                        reservationService.deleteReservationTerm(connection, Integer.parseInt(employeeId), date, startTime);
+                        break;
+                    case AddReservationTerm:
+                        String data = in.readLine();
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        java.util.Date utilDate = sdf.parse(data);
+                        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                        String godzinaPoczatkowa = in.readLine();
+                        String godzinaKoncowa = in.readLine();
+                        employeeId = in.readLine();
+                        reservationService.addReservationTerm(connection,Integer.parseInt(employeeId),sqlDate,godzinaPoczatkowa,godzinaKoncowa);
+                        break;
                 }
             }
         } catch (Exception e) {

@@ -1,7 +1,6 @@
 package com.example.salon_fryzjerski_projekt;
 
 import java.sql.*;
-import java.util.Date;
 
 public class ReservationService {
 
@@ -27,7 +26,7 @@ public class ReservationService {
         StringBuilder result = new StringBuilder();
         String sql = "SELECT rezerwacje_terminy.* " +
                 "FROM rezerwacje_terminy " +
-                "WHERE rezerwacje_terminy.pracownik_id_pracownika = ? " +
+                "WHERE rezerwacje_terminy.data = ? AND rezerwacje_terminy.pracownik_id_pracownika = ? " +
                 "AND rezerwacje_terminy.godzina_poczatkowa NOT IN (" +
                 "    SELECT rezerwacje_terminy.godzina_poczatkowa " +
                 "    FROM rezerwacje_terminy " +
@@ -36,9 +35,10 @@ public class ReservationService {
                 ")";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, employeeId);
+            preparedStatement.setString(1, date);
             preparedStatement.setInt(2, employeeId);
-            preparedStatement.setString(3, date);
+            preparedStatement.setInt(3, employeeId);
+            preparedStatement.setString(4, date);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
@@ -52,6 +52,38 @@ public class ReservationService {
         System.out.println(result.toString());
         return result.toString();
     }
+
+    public void deleteReservationTerm(Connection connection, int employeeId, String date, String startTime) {
+        String deleteSQL = "DELETE FROM rezerwacje_terminy WHERE pracownik_id_pracownika = ? AND data = ? AND godzina_poczatkowa = ?";
+
+        try (PreparedStatement deleteStatement = connection.prepareStatement(deleteSQL)) {
+            deleteStatement.setInt(1, employeeId);
+            deleteStatement.setString(2, date);
+            deleteStatement.setString(3, startTime);
+
+            deleteStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            handleSQLException(e);
+        }
+    }
+
+    public void addReservationTerm(Connection connection, int employeeId, Date date, String startTime, String endTime) {
+        String insertSQL = "INSERT INTO rezerwacje_terminy (pracownik_id_pracownika, data, godzina_poczatkowa, godzina_koncowa) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement insertStatement = connection.prepareStatement(insertSQL)) {
+            insertStatement.setInt(1, employeeId);
+            insertStatement.setDate(2, date);
+            insertStatement.setString(3, startTime);
+            insertStatement.setString(4, endTime);
+
+            insertStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            handleSQLException(e);
+        }
+    }
+
     public void createReservation(Connection connection,Date data, String godzinaPoczatkowa, String godzinaKoncowa , String name, String surname, String phone, String clientId,int employeeId,int serviceId,int branchId) {
         Integer clientIdInteger;
         try {

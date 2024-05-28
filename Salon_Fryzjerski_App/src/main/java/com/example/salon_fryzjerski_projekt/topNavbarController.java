@@ -81,7 +81,7 @@ public class topNavbarController {
 
     public void switchToAccountDetails(ActionEvent event) {
         String accountType = data.getAcccountType();
-        if(Objects.equals(accountType, "pracownik") || Objects.equals(accountType, "klient")) {
+        if(Objects.equals(accountType, "klient")) {
             if (event.getSource() instanceof MenuItem) {
                 try {
                     switchSceneFromMenuItem((MenuItem) event.getSource(), "account-booking-history.fxml");
@@ -89,7 +89,16 @@ public class topNavbarController {
                     throw new RuntimeException(e);
                 }
             }
-        } else{
+        } else if(Objects.equals(accountType, "pracownik")){
+            if (event.getSource() instanceof MenuItem) {
+                try {
+                    switchSceneFromMenuItem((MenuItem) event.getSource(), "account-employee-panel.fxml");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        else{
             if (event.getSource() instanceof MenuItem) {
                 try {
                     switchSceneFromMenuItem((MenuItem) event.getSource(), "account-admin-panel.fxml");
