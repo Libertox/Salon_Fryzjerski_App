@@ -24,11 +24,15 @@ public class AccountBookingHistory {
     int index = 0;
 
     private void addData(){
-        if(data.getAcccountType().equals("klient"))
-            textData = Client.getBookingInfo(RequestType.GetClientReservation,data.getUserId());
-        else if (data.getAcccountType().equals("pracownik"))
-            textData = Client.getBookingInfo(RequestType.GetEmployeeReservation,data.getUserId());
 
+        if(data.getAcccountType().equals("klient")){
+            textData = Client.getBookingInfo(RequestType.GetClientReservation,data.getUserId());
+            textData = Client.getBookingInfo(RequestType.GetClientReservation,data.getUserId());
+        }
+        else if (data.getAcccountType().equals("pracownik")){
+            textData = Client.getBookingInfo(RequestType.GetEmployeeReservation,data.getUserId());
+            textData = Client.getBookingInfo(RequestType.GetEmployeeReservation,data.getUserId());
+        }
     }
 
     public void initialize() {

@@ -17,6 +17,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.event.ActionEvent;
+
+import javax.net.ssl.SSLContext;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -49,7 +51,6 @@ public class AccountEmployeePanelTermList {
     private List<String> getTimesToList(String date) {;
         List<String> timesList = new ArrayList<>();
         timesList = Client.getTimeSlots(RequestType.GetAvailableTimeSlotsForEmployee,data.getUserId(),date);
-
         if(!date.equals("")) {
 
             LocalDate today = LocalDate.now();
@@ -125,7 +126,15 @@ public class AccountEmployeePanelTermList {
     }
 
     private List<LocalDate> generateDateList(LocalDate startDate, int days) {
-        return IntStream.range(0, days).mapToObj(startDate::plusDays).collect(Collectors.toList());
+        List<LocalDate> dateList = new ArrayList<>();
+        LocalDate currentDate = startDate;
+
+        for (int i = 0; i < days; i++) {
+            dateList.add(currentDate);
+            currentDate = currentDate.plusDays(1);
+        }
+
+        return dateList;
     }
 
     private void initializeButtonSelection() {
@@ -155,7 +164,7 @@ public class AccountEmployeePanelTermList {
     private void handleButtonSelection(Button button, List<Button> buttonsGroup) {
         if (buttonsGroup.equals(allDateButtons)) {
             lastSelectedDateButton = button.getText();
-            timeList = getTimesToList(getDate());//Przypisanie listy godzin do dnia
+            timeList = getTimesToList(getDate());
             currentTimeIndex = 0;
             updateTimeButtons();
             animateVisibility(bookingTimesPane);
@@ -354,8 +363,14 @@ public class AccountEmployeePanelTermList {
     public String getDate() {
         String dayPart = lastSelectedDateButton.split("\n")[1];
         int day = Integer.parseInt(dayPart);
+        int month = 0;
 
-        LocalDate selectedDate = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), day);
+        if(day < currentDate.getDayOfMonth())
+            month = currentDate.getMonth().getValue() + 1;
+        else
+            month = currentDate.getMonth().getValue();
+
+        LocalDate selectedDate = LocalDate.of(currentDate.getYear(), month, day);
 
         return selectedDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
     }
@@ -381,12 +396,7 @@ public class AccountEmployeePanelTermList {
         } catch (IOException ignored) {
         }
     }
-    public void switchToSceneBookingUserInfo(ActionEvent event) throws IOException {
-        switchScene(event, "booking-user-info-view.fxml");
-    }
-    public void switchToSceneBookingFinal(ActionEvent event) throws IOException {
-        switchScene(event, "booking-final-view.fxml");
-    }
+
 
     public void switchToAccountReservation(ActionEvent event){
         switchScene(event, "account-employee-panel.fxml");

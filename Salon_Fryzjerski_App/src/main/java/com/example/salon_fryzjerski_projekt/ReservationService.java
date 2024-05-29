@@ -32,7 +32,8 @@ public class ReservationService {
                 "    FROM rezerwacje_terminy " +
                 "    RIGHT JOIN rezerwacje ON rezerwacje_terminy.godzina_poczatkowa = rezerwacje.godzina_poczatkowa " +
                 "    WHERE rezerwacje_terminy.pracownik_id_pracownika = ? AND rezerwacje.data = ?" +
-                ")";
+                ") " +
+                "ORDER BY rezerwacje_terminy.godzina_poczatkowa";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, date);

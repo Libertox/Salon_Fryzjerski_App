@@ -34,9 +34,6 @@ public class AccountBookingHistoryDetails {
 
     public void initialize() {
         changeTextValue();
-        if (Objects.equals(data.getAcccountType(), "pracownik")){
-            submitButton.setVisible(false);
-        }
     }
 
     private String formatTimeForDisplay(String time) {

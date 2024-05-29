@@ -63,7 +63,12 @@ public class AccountEmployeePanelAddingTerm {
         dayLabel.setText("");
         startTimeLabel.setText("");
 
-        boolean isError = checkYearError() && checkMonthError() && checkDayError() && checkStartTimeError();
+        boolean yearError = checkYearError();
+        boolean monthError = checkMonthError();
+        boolean dayError = checkDayError();
+        boolean timeError = checkStartTimeError();
+
+        boolean isError = yearError || monthError || dayError || timeError;
 
         if(!isError)
             isError = checkTimeElapsed();

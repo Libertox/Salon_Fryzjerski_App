@@ -27,11 +27,22 @@ public class LoginService {
     }
 
     public void deleteEmployeeByID(Connection connection, String employeeID) {
-        String deletePracownikSQL = "DELETE FROM pracownik WHERE id_pracownika = ?";
-        String deleteDaneLogowaniaSQL = "DELETE FROM dane_logowania WHERE uid = (SELECT pracownik.dane_logowania_uid FROM pracownik WHERE id_pracownika = ?)";
+        String deleteRezerwacjeSQL = "DELETE FROM rezerwacje WHERE pracownik_id_pracownika = ?";
+        String deleteRezerwacjeTerminySQL = "DELETE FROM rezerwacje_terminy WHERE pracownik_id_pracownika = ?";
 
-        try (PreparedStatement deletePracownikStatement = connection.prepareStatement(deletePracownikSQL);
+        String deletePracownikSQL = "DELETE FROM pracownik WHERE id_pracownika = ?";
+        String deleteDaneLogowaniaSQL = "DELETE FROM dane_logowania WHERE uid = (SELECT dane_logowania_uid FROM pracownik WHERE id_pracownika = ?)";
+
+        try (PreparedStatement deleteRezerwacjeStatement = connection.prepareStatement(deleteRezerwacjeSQL);
+             PreparedStatement deleteRezerwacjeTerminyStatement = connection.prepareStatement(deleteRezerwacjeTerminySQL);
+             PreparedStatement deletePracownikStatement = connection.prepareStatement(deletePracownikSQL);
              PreparedStatement deleteDaneLogowaniaStatement = connection.prepareStatement(deleteDaneLogowaniaSQL)) {
+
+            deleteRezerwacjeStatement.setString(1, employeeID);
+            deleteRezerwacjeTerminyStatement.setString(1, employeeID);
+
+            int rowsAffectedRezerwacje = deleteRezerwacjeStatement.executeUpdate();
+            int rowsAffectedRezerwacjeTerminy = deleteRezerwacjeTerminyStatement.executeUpdate();
 
             deleteDaneLogowaniaStatement.setString(1, employeeID);
             int rowsAffectedDaneLogowania = deleteDaneLogowaniaStatement.executeUpdate();
@@ -39,9 +50,8 @@ public class LoginService {
             deletePracownikStatement.setString(1, employeeID);
             int rowsAffectedPracownik = deletePracownikStatement.executeUpdate();
 
-
             if (rowsAffectedPracownik > 0 || rowsAffectedDaneLogowania > 0) {
-                System.out.println("Pracownik usunięty wraz z danymi logowania.");
+                System.out.println("Pracownik usunięty wraz z danymi logowania, rezerwacjami i terminami rezerwacji.");
             } else {
                 System.out.println("Nie znaleziono pracownika o podanym ID.");
             }
@@ -50,6 +60,7 @@ public class LoginService {
             handleSQLException(e);
         }
     }
+
 
     public void addNewEmployeeWithLogin(Connection connection, String imie, String nazwisko, String accountType , String pesel, String adres, String phoneNumber, int branchId) {
         String uid = UUID.randomUUID().toString();

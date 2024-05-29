@@ -136,7 +136,15 @@ public class BookingController{
     }
 
     private List<LocalDate> generateDateList(LocalDate startDate, int days) {
-        return IntStream.range(0, days).mapToObj(startDate::plusDays).collect(Collectors.toList());
+        List<LocalDate> dateList = new ArrayList<>();
+        LocalDate currentDate = startDate;
+
+        for (int i = 0; i < days; i++) {
+            dateList.add(currentDate);
+            currentDate = currentDate.plusDays(1);
+        }
+
+        return dateList;
     }
 
     private void initializeButtonSelection() {
@@ -366,7 +374,14 @@ public class BookingController{
             String dayPart = lastSelectedDateButton.split("\n")[1];
             int day = Integer.parseInt(dayPart);
 
-            LocalDate selectedDate = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), day);
+            int month = 0;
+
+            if(day < currentDate.getDayOfMonth())
+                month = currentDate.getMonth().getValue() + 1;
+            else
+                month = currentDate.getMonth().getValue();
+
+            LocalDate selectedDate = LocalDate.of(currentDate.getYear(), month, day);
 
            return selectedDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
     }
