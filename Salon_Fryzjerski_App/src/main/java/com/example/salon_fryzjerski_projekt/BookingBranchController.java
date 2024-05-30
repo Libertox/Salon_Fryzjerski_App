@@ -74,6 +74,12 @@ public class BookingBranchController {
             bookingBranchNextButton.setDisable(true);
 
             setTimeButtonVisibility();
+
+            if(data.getUserId() == 0) {
+                User client = Client.getUserData(RequestType.GetUserData,data.getUsername(),data.getPassword());
+                data.setUserId(client.getAccount_id());
+                System.out.println(data.getUserId());
+            }
         }
     }
 

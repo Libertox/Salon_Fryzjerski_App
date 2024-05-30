@@ -251,7 +251,7 @@ public class Client {
     public static User getUserData(RequestType requestType, String login, String passoword){
         CreateSocket();
 
-        User user = new User(100,"","","","");
+        User user = new User(0,"","","","");
         try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
 

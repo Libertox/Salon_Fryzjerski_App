@@ -55,7 +55,6 @@ public class BookingEmployeeController {
     private void getDataToTextList(){
         employees = Client.getEmployee(RequestType.GetEmployeeByBranch,data.getBranchName());
     }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void initialize(){
         if (areAllObjectsNonNull()) {
             getDataToTextList();
@@ -63,7 +62,6 @@ public class BookingEmployeeController {
             maxPages = (int) Math.ceil((double) employees.size() / 3) - 1;
             bookingEmployeeMaxPaginationText.setText(String.valueOf(maxPages));
             setButtonVisibility();
-            //helloButton
         }
     }
 
@@ -174,7 +172,7 @@ public class BookingEmployeeController {
     }
     public void handleRandomEmployeeClick(ActionEvent event) {
             List<Employee> randomEmployee = Client.getEmployee(RequestType.GetOneEmployeeByBranch,data.getBranchName());
-            data.setUserId(randomEmployee.get(0).getAccount_id());
+            data.setEmployeeId(randomEmployee.get(0).getAccount_id());
             data.setEmployeeName(randomEmployee.get(0).getName() + " " + randomEmployee.get(0).getSurname());
             switchScene(event, "booking-view.fxml");
     }

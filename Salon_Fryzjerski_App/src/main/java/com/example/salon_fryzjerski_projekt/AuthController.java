@@ -86,6 +86,8 @@ public class AuthController{
                 data.setPhone(phone);
                 data.setAccountType("klient");
                 data.setIsLogged(true);
+                data.setPassword(password);
+                data.setUsername(username);
 
                 User client = Client.getUserData(RequestType.GetUserData,username,password);
 

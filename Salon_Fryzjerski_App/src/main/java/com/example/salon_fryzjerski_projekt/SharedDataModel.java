@@ -25,6 +25,8 @@ public class SharedDataModel {
     private int bookingId;
     private String typeDuration;
 
+    private String username;
+    private String password;
 
 
     private SharedDataModel(){}
@@ -32,7 +34,6 @@ public class SharedDataModel {
     public static SharedDataModel getInstance(){
         return instance;
     }
-//accountType
     public boolean getIsLogged() {
         return isLogged;
     }
@@ -48,7 +49,6 @@ public class SharedDataModel {
         this.accountType = accountType;
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
 
     public String getCityName() {
         return cityName;
@@ -178,6 +178,22 @@ public class SharedDataModel {
     }
     public void setTypeDuration(String typeDuration){
         this.typeDuration = typeDuration;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
 

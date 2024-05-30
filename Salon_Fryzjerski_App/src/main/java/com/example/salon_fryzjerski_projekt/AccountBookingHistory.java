@@ -26,6 +26,10 @@ public class AccountBookingHistory {
     private void addData(){
 
         if(data.getAcccountType().equals("klient")){
+            if(data.getUserId() == 0) {
+                User client = Client.getUserData(RequestType.GetUserData,data.getUsername(),data.getPassword());
+                data.setUserId(client.getAccount_id());
+            }
             textData = Client.getBookingInfo(RequestType.GetClientReservation,data.getUserId());
             textData = Client.getBookingInfo(RequestType.GetClientReservation,data.getUserId());
         }
