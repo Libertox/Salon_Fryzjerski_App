@@ -185,7 +185,7 @@ public class AccountAdminPanelBranch {
             isError = true;
         }
 
-        if (nameString.isEmpty()){
+        if (surnameString.isEmpty()){
             surnameLabel.setText("Pole jest wymagane");
             isError = true;
         }
