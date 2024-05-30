@@ -24,7 +24,7 @@ public class ReservationService {
     }
     public String getAvailableTimeSlotsForEmployee(Connection connection, int employeeId, String date) {
         StringBuilder result = new StringBuilder();
-        String sql = "SELECT rezerwacje_terminy.* " +
+        String sql = "SELECT DISTINCT  rezerwacje_terminy.godzina_poczatkowa " +
                 "FROM rezerwacje_terminy " +
                 "WHERE rezerwacje_terminy.data = ? AND rezerwacje_terminy.pracownik_id_pracownika = ? " +
                 "AND rezerwacje_terminy.godzina_poczatkowa NOT IN (" +
