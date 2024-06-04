@@ -15,11 +15,12 @@ import java.lang.ref.Cleaner;
 import java.util.regex.Pattern;
 
 public class AuthController{
-    String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+    String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
     String nameRegex = "^[A-Z][a-z]+$";
     String phoneRegex = "^\\d{9}$";
     Pattern namePattern = Pattern.compile(nameRegex);
     Pattern phonePattern = Pattern.compile(phoneRegex);
+    Pattern emailPattern = Pattern.compile(emailRegex);
 
     @FXML private TextField loginField, nameField, surnameField, phoneField;
     @FXML private PasswordField passwordField, passwordRepeatField;
@@ -37,14 +38,15 @@ public class AuthController{
         if(!areAllObjectsNonNullForLogin()){
             return;
         }
+        loginDataErrorMsg.setVisible(false);
+
         username = loginField.getText().trim();
         password = passwordField.getText().trim();
 
-        loginDataErrorMsg.setVisible(false);
         if (!handleErrorsLogin()) {
             try {
                 User user = Client.getUserData(RequestType.GetUserData,username,password);
-                if (user.getAccount_type() != "") {
+                if (user != null) {
                     data.setName(user.getName());
                     data.setSurname(user.getSurname());
                     data.setUserId(user.getAccount_id());
@@ -89,9 +91,11 @@ public class AuthController{
                 data.setPassword(password);
                 data.setUsername(username);
 
-                User client = Client.getUserData(RequestType.GetUserData,username,password);
+                User user = Client.getUserData(RequestType.GetUserData,username,password);
 
-                data.setUserId(client.getAccount_id());
+                if(user != null){
+                    data.setUserId(user.getAccount_id());
+                }
 
                 switchToHome(event);
             } catch (IOException e) {
@@ -149,9 +153,8 @@ public class AuthController{
             loginLabel.setText("Pole jest wymagane");
             isError = true;
         } else {
-            String emailRegex = EMAIL_REGEX;
-            Pattern pattern = Pattern.compile(emailRegex);
-            if (!pattern.matcher(username).matches()) {
+
+            if (!emailPattern.matcher(username).matches()) {
                 loginLabel.setText("Nieprawidłowy format");
                 isError = true;
             }

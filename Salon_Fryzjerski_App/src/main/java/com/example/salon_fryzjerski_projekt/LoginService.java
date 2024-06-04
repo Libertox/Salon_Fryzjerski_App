@@ -144,22 +144,6 @@ public class LoginService {
     }
 
 
-    private static List<String> executeSqlQueryForList(Connection connection, String sql, String columnName) {
-        List<String> resultList = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
-
-            while (resultSet.next()) {
-                resultList.add(resultSet.getString(columnName));
-            }
-
-        } catch (SQLException e) {
-            handleSQLException(e);
-        }
-
-        return resultList;
-    }
-
     private static void handleSQLException(SQLException e) {
         e.printStackTrace();
     }
@@ -279,7 +263,6 @@ public class LoginService {
             }
         } catch (SQLException e) {
             handleSQLException(e);
-            return "Error";
         }
         return result.toString();
     }
